@@ -1,0 +1,31 @@
+hsi-ml-project/
+│
+├── data/ # The "Source of Truth"
+│ ├── raw/ # Immutable originals (never edit these)
+│ │ ├── hsi_price_history.csv
+│ │ └── scraped_news_dump.csv
+│ │
+│ └── processed/ # The "Food" for your model
+│ ├── training_data.csv # Merged Price + Sentiment + Technical Indicators
+│ └── scalers/ # Saved MinMaxScaler objects (critical for inference)
+│ └── price_scaler.pkl
+│
+├── notebooks/ # The "Lab" (Experimentation)
+│ ├── 01_scrape_and_explore.ipynb # validating data sources
+│ ├── 02_sentiment_analysis.ipynb # running FinBERT on rows
+│ └── 03_model_training.ipynb # the loop: load data -> train -> plot loss
+│
+├── src/ # The "Engine" (Reusable Code)
+│ ├── __init__.py
+│ ├── config.py # Global vars (SEQ_LEN=60, BATCH_SIZE=32)
+│ ├── dataset.py # PyTorch Dataset class (handles windowing)
+│ ├── model.py # The Transformer Class definition (nn.Module)
+│ └── utils.py # Helper functions (get_sentiment(), plot_results())
+│
+├── models/ # The "Trophies" (Saved Weights)
+│ ├── finbert_config/ # (Optional) local cache of FinBERT
+│ └── transformer_v1.pth # Your trained time-series model
+│
+├── train.py # Command-line script to run full training
+├── inference.py # Script to predict "Tomorrow's Price"
+└── requirements.txt # Project dependencies
