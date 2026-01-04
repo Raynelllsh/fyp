@@ -17,6 +17,20 @@ class PositionalEncoding(nn.Module):
     
     def forward(self, x):
         return x + self.pe[:, :x.size(1), :]
+    
+class DirectionalLoss(nn.Module):
+    def __init__(self, alpha=10.0): # alpha is how hard to punish wrong direction
+        super(DirectionalLoss, self).__init__()
+        self.mse = nn.MSELoss()
+        self.alpha = alpha 
+
+    def forward(self, pred, target):
+        loss = self.mse(pred, target)
+        # 1 if signs differ, 0 if they match
+        sign_mismatch = torch.where(pred * target < 0, 1.0, 0.0)
+        # Add penalty only where signs are wrong
+        penalty = self.alpha * torch.mean(sign_mismatch * torch.abs(pred - target))
+        return loss + penalty
 
 class TransformerModel(nn.Module):
     """
