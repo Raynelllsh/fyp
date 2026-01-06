@@ -1,0 +1,1 @@
+{"feature_cols": ["sentiment_score", "Sentiment_MA7", "Sentiment_Momentum", "Return_1D", "Volatility_10D"], "input_dim": 5, "seq_len": 30}
