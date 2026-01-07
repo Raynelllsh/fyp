@@ -27,7 +27,7 @@ VAL_SPLIT = 0.1      # 10% validation data
 BATCH_SIZE = 128      # Larger batch size = faster training on GPU
 LEARNING_RATE = 0.001
 NUM_EPOCHS = 100
-HIDDEN_DIM = 16
+HIDDEN_DIM = 32
 NUM_LAYERS = 1
 DROPOUT = 0.6
 NHEAD = 8            # Attention heads (Transformer only)

@@ -146,6 +146,32 @@ def backtest():
         equity.append(balance)
 
     # 8. RESULTS & PLOTTING
+    wins = 0
+    losses = 0
+    total_trades = 0
+    
+    # Iterate through the decisions again to count
+    for t in range(0, len(pred_class), step):
+        action = pred_class[t]
+        r = aligned_future_ret[t]
+        
+        # We only care if we took a position (Action = 1 -> Buy)
+        # Note: In your binary version, 1 is Buy.
+        if action == 1: 
+            total_trades += 1
+            if r > 0:
+                wins += 1
+            else:
+                losses += 1
+
+    if total_trades > 0:
+        win_rate = (wins / total_trades) * 100
+        print(f"Total Trades: {total_trades}")
+        print(f"Wins: {wins} | Losses: {losses}")
+        print(f"Win Rate: {win_rate:.2f}%")
+    else:
+        print("No trades were taken.")
+
     total_return = (balance - initial) / initial * 100.0
     print(f"Final balance: {balance:.2f} | Total return: {total_return:.2f}%")
     
